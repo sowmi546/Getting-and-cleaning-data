@@ -1,6 +1,8 @@
 install.packages("dplyr")
 install.packages("data.table")
+install.packages("reshape")
 library(dplyr)
+library(reshape)
 library(data.table)
 getwd()
 
@@ -28,6 +30,13 @@ activityTestData<-read.table("test/Y_test.txt", header=FALSE)
 subjectFinal<- rbind(subjectTrainData,subjectTestData)
 featuresFinal<-rbind(featuresTrainData,featuresTestData)
 activityFinal<-rbind(activityTrainData,activityTestData)
+
+colnames(subjectFinal)<- "Subject"
+colnames(activityFinal)<- "Activity"
+colnames(featuresFinal)<-t(namesOfFeatures[2])
+
+finalDataSet<- cbind(featuresFinal,activityFinal,subjectFinal)
+
 
 
 
