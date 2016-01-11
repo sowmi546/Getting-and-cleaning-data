@@ -37,8 +37,46 @@ colnames(featuresFinal)<-t(namesOfFeatures[2])
 
 finalDataSet<- cbind(featuresFinal,activityFinal,subjectFinal)
 
+#part2
+reqCols <- grep(".*Mean.*|.*Std.*", names(finalDataSet), ignore.case=TRUE)
+finalCols<-c(reqCols,562,563)
+dim(finalDataSet)
 
 
+finalCols
+
+modifiedData<-finalDataSet[,finalCols]
+dim(modifiedData)
 
 
+#part3
+colnames(modifiedData)
+class(modifiedData$Activity)
 
+modifiedData$Activity <- as.character((modifiedData$Activity))
+#replacing the values with those from the names of activites
+namesOfActivities
+for(i in 1:6)
+{
+  modifiedData$Activity[modifiedData$Activity==i]<-as.character(namesOfActivities[i,2])
+
+}
+
+#factoring the activity variable
+modifiedData$Activity <- as.factor(modifiedData$Activity)
+
+
+#giving descriptive variable names
+names(modifiedData)
+
+#modifying variable names so that they are more descriptive
+
+names(modifiedData)<-gsub("Acc","Accelerometer",names(modifiedData))
+names(modifiedData) <- gsub("Gyro","Gyroscope",names(modifiedData))
+names(modifiedData)<- gsub("Mag","Magnitude",names(modifiedData))
+names(modifiedData) <- gsub("^t","Time",names(modifiedData))
+names(modifiedData) <- gsub("^f","Frequency",names(modifiedData))
+names(modifiedData)<-gsub("-freq()", "Frequency", names(modifiedData), ignore.case = TRUE)
+names(modifiedData)<-gsub("tBody", "TimeBody", names(modifiedData))
+names(modifiedData)<-gsub("-mean()", "Mean", names(modifiedData), ignore.case = TRUE)
+names(modifiedData)<-gsub("-std()", "StandardDeviation", names(modifiedData), ignore.case = TRUE)
