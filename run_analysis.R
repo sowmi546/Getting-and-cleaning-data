@@ -80,3 +80,18 @@ names(modifiedData)<-gsub("-freq()", "Frequency", names(modifiedData), ignore.ca
 names(modifiedData)<-gsub("tBody", "TimeBody", names(modifiedData))
 names(modifiedData)<-gsub("-mean()", "Mean", names(modifiedData), ignore.case = TRUE)
 names(modifiedData)<-gsub("-std()", "StandardDeviation", names(modifiedData), ignore.case = TRUE)
+
+
+#part5
+
+modifiedData$Subject <- as.factor(modifiedData$Subject)
+modifiedData<- data.table(modifiedData)
+
+modifiedData2 <- aggregate(.~Subject+Activity,modifiedData,mean)
+modifiedData2 <-modifiedData[order(modifiedData$Subject,modifiedData$Activity),]
+write.table(modifiedData2,file="FinalData.txt",row.names=FALSE)
+#checking the content of the newly generated file
+
+a<-read.table("FinalData.txt")
+head(a) #displays the data with modified col names and activity values
+
